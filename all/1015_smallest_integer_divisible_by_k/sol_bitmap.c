@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -14,7 +15,7 @@ void setBitInBitmapArray(
     }
 
     bitmap_array_ptr[bit / BITMAP_BITS_COUNT] |= (
-        (UINT64_C(1)) << ((unsigned int)(bit % BITMAP_BITS_COUNT))
+        (UINT64_C(1)) << (bit % (BITMAP_BITS_COUNT))
     );
 }
 
@@ -29,9 +30,9 @@ bool testBitInBitmapArray(
 
     return (
         (
-            bitmap_array_ptr[bit / BITMAP_BITS_COUNT]
+            bitmap_array_ptr[bit / (BITMAP_BITS_COUNT)]
             &
-            ((UINT64_C(1)) << ((unsigned int)(bit % BITMAP_BITS_COUNT)))
+            ((UINT64_C(1)) << (bit % (BITMAP_BITS_COUNT)))
         )
         >
         (UINT64_C(0))
@@ -41,14 +42,14 @@ bool testBitInBitmapArray(
 int smallestRepunitDivByK(int k) {
     if (0 == (k & 0x1)) {
         /*
-         * As n is a all 1-digit number, an odd number n cannot be factor
+         * As n is a all 1-digit number, an odd number n cannot be multiple
          * of an even number k, just return -1 directly.
          */
         return -1;
     }
 
     int bitmap_array_size = (
-        (k + 1 + ((BITMAP_BITS_COUNT) - 1)) / (BITMAP_BITS_COUNT)
+        (k + ((BITMAP_BITS_COUNT) - 1)) / (BITMAP_BITS_COUNT)
     );
     uint64_t *remainders_bitmap_array_ptr = (uint64_t*)calloc(
         bitmap_array_size,

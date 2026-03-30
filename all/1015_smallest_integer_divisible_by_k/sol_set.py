@@ -1,7 +1,7 @@
 class Solution:
     def smallestRepunitDivByK(self, k: int) -> int:
         if 0 == (k & 0x1):
-            # As n is a all 1-digit number, an odd number n cannot be factor
+            # As n is a all 1-digit number, an odd number n cannot be multiple
             # of an even number k, just return -1 directly.
             return -1
 
